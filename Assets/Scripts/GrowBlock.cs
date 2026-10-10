@@ -35,13 +35,16 @@ public class GrowBlock : MonoBehaviour
     public GrowthState currentState;
 
     public SpriteRenderer thSR;
-    public Sprite soilTilled,soilWatered;
+    public Sprite soilTilled, soilWatered;
+
+    public SpriteRenderer cropSR;
+    public Sprite cropPlanted, cropGrowing1, cropGrowing2, cropRipe;
 
     public bool isWatered;
 
     void Start()
     {
-        
+
     }
 
 
@@ -52,6 +55,11 @@ public class GrowBlock : MonoBehaviour
         //     AdvanceStage();
         //     SetSoilSprite();
         // }
+
+        if(Keyboard.current.nKey.wasPressedThisFrame)
+        {
+            AdvanceCrop();
+        }
     }
 
     /// <summary>
@@ -108,5 +116,70 @@ public class GrowBlock : MonoBehaviour
         isWatered = true;
 
         SetSoilSprite();
+    }
+
+    /// <summary>
+    /// 播种
+    /// </summary>
+    public void PlantCrop()
+    {
+        if (currentState == GrowthState.ploughed && isWatered == true)
+        {
+            currentState = GrowthState.planted;
+            UpdateCropSprite();
+        }
+    }
+
+    /// <summary>
+    /// 更新作物的精灵图片
+    /// </summary>
+    void UpdateCropSprite()
+    {
+        switch (currentState)
+        {
+            case GrowthState.planted:
+                cropSR.sprite = cropPlanted;
+                break;
+            case GrowthState.growing1:
+                cropSR.sprite = cropGrowing1;
+                break;
+            case GrowthState.growing2:
+                cropSR.sprite = cropGrowing2;
+                break;
+            case GrowthState.ripe:
+                cropSR.sprite = cropRipe;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 推进作物生长阶段
+    /// </summary>
+    public void AdvanceCrop()
+    {
+        if (isWatered)
+        {
+            if (currentState == GrowthState.planted || currentState == GrowthState.growing1 || currentState == GrowthState.growing2)
+            {
+                //AdvanceStage();
+                currentState++;
+                isWatered = false;
+                SetSoilSprite();
+                UpdateCropSprite();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 收获作物
+    /// </summary>
+    public void HarvestCrop()
+    {
+        if (currentState == GrowthState.ripe)
+        {
+            currentState = GrowthState.ploughed;
+            SetSoilSprite();
+            cropSR.sprite = null;
+        }
     }
 }
