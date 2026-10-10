@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public static UIController instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public GameObject[] toolbarActivatorIcons;
     void Start()
     {
         
@@ -11,6 +17,19 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    
+    /// <summary>
+    /// 切换工具栏图标
+    /// </summary>
+    public void SwitchTool(int selected)
+    {
+        foreach (var icon in toolbarActivatorIcons)
+        {
+            icon.SetActive(false);
+        }
+
+        toolbarActivatorIcons[selected].SetActive(true);
     }
 }

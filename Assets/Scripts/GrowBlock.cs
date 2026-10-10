@@ -35,7 +35,9 @@ public class GrowBlock : MonoBehaviour
     public GrowthState currentState;
 
     public SpriteRenderer thSR;
-    public Sprite soilTilled;
+    public Sprite soilTilled,soilWatered;
+
+    public bool isWatered;
 
     void Start()
     {
@@ -76,16 +78,35 @@ public class GrowBlock : MonoBehaviour
         }
         else
         {
-            thSR.sprite = soilTilled;
+            if (isWatered)
+            {
+                thSR.sprite = soilWatered;
+            }
+            else
+            {
+                thSR.sprite = soilTilled;
+            }
         }
     }
-    
+
+    /// <summary>
+    /// 翻耕土地
+    /// </summary>
     public void PloughSoil()
     {
-        if(currentState == GrowthState.barren)
+        if (currentState == GrowthState.barren)
         {
             currentState = GrowthState.ploughed;
             SetSoilSprite();
         }
+    }
+    /// <summary>
+    /// 浇水
+    /// </summary>
+    public void WaterSoil()
+    {
+        isWatered = true;
+
+        SetSoilSprite();
     }
 }

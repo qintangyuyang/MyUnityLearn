@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        
+        UIController.instance.SwitchTool((int)currentTool);
     }
 
     void Update()
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
         //动画控制器的参数设置（状态切换）
         anim.SetFloat("Speed", theRB.linearVelocity.magnitude);
 
+        bool hasSwitchedTool = false;
         //工具使用
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
@@ -67,23 +68,38 @@ public class PlayerController : MonoBehaviour
             {
                 currentTool = ToolType.plough;
             }
+
+            hasSwitchedTool = true;
         }
         //工具切换
         if(Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             currentTool = ToolType.plough;
+            
+            hasSwitchedTool = true;
         }
         if(Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             currentTool = ToolType.wateringcan;
+            
+            hasSwitchedTool = true;
         }
         if(Keyboard.current.digit3Key.wasPressedThisFrame)
         {
             currentTool = ToolType.seeds;
+            
+            hasSwitchedTool = true;
         }
         if(Keyboard.current.digit4Key.wasPressedThisFrame)
         {
             currentTool = ToolType.basket;
+            
+            hasSwitchedTool = true;
+        }
+
+        if (hasSwitchedTool)
+        {
+            UIController.instance.SwitchTool((int)currentTool);
         }
 
         //工具使用
@@ -106,8 +122,11 @@ public class PlayerController : MonoBehaviour
             {
                 case ToolType.plough:
                     block.PloughSoil();
+                    anim.SetTrigger("usePlough");
                     break;
                 case ToolType.wateringcan:
+                    block.WaterSoil(); 
+                    anim.SetTrigger("useWateringCan");
                     break;
                 case ToolType.seeds:
                     break;
