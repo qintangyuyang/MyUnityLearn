@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,6 +38,9 @@ public class PlayerController : MonoBehaviour
 
     public float toolWaitTime = 0.5f;
     private float toolWaitCounter;
+
+    public Transform toolIndicator;
+    public float toolRange = 3f;
 
     void Start()
     {
@@ -118,6 +122,18 @@ public class PlayerController : MonoBehaviour
 
         //动画控制器的参数设置（状态切换）
         anim.SetFloat("Speed", theRB.linearVelocity.magnitude);
+
+        //限制鼠标上工具指示的位置，离玩家距离不超过toolRange
+        toolIndicator.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        toolIndicator.position = new Vector3(toolIndicator.position.x, toolIndicator.position.y, 0f);
+        if (Vector3.Distance(toolIndicator.position, transform.position) > toolRange)
+        {
+            Vector2 direction = toolIndicator.position - transform.position;
+            direction = direction.normalized * toolRange;
+            toolIndicator.position = transform.position + new Vector3(direction.x, direction.y, 0f);
+        }
+
+        toolIndicator.position = new Vector3(Mathf.FloorToInt(toolIndicator.position.x) + 0.5f, Mathf.FloorToInt(toolIndicator.position.y) + 0.5f, 0f);
     }
 
     void UseTool()

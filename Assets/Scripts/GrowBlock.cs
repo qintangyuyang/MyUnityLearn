@@ -42,6 +42,8 @@ public class GrowBlock : MonoBehaviour
 
     public bool isWatered;
 
+    public bool prevenetUse;
+
     void Start()
     {
 
@@ -56,7 +58,7 @@ public class GrowBlock : MonoBehaviour
         //     SetSoilSprite();
         // }
 
-        if(Keyboard.current.nKey.wasPressedThisFrame)
+        if (Keyboard.current.nKey.wasPressedThisFrame)
         {
             AdvanceCrop();
         }
@@ -102,7 +104,7 @@ public class GrowBlock : MonoBehaviour
     /// </summary>
     public void PloughSoil()
     {
-        if (currentState == GrowthState.barren)
+        if (currentState == GrowthState.barren && prevenetUse == false)
         {
             currentState = GrowthState.ploughed;
             SetSoilSprite();
@@ -113,9 +115,12 @@ public class GrowBlock : MonoBehaviour
     /// </summary>
     public void WaterSoil()
     {
-        isWatered = true;
+        if (prevenetUse == false)
+        {
+            isWatered = true;
 
-        SetSoilSprite();
+            SetSoilSprite();
+        }
     }
 
     /// <summary>
@@ -123,7 +128,7 @@ public class GrowBlock : MonoBehaviour
     /// </summary>
     public void PlantCrop()
     {
-        if (currentState == GrowthState.ploughed && isWatered == true)
+        if (currentState == GrowthState.ploughed && isWatered == true && prevenetUse == false)
         {
             currentState = GrowthState.planted;
             UpdateCropSprite();
@@ -157,7 +162,7 @@ public class GrowBlock : MonoBehaviour
     /// </summary>
     public void AdvanceCrop()
     {
-        if (isWatered)
+        if (isWatered && prevenetUse == false)
         {
             if (currentState == GrowthState.planted || currentState == GrowthState.growing1 || currentState == GrowthState.growing2)
             {
@@ -175,7 +180,7 @@ public class GrowBlock : MonoBehaviour
     /// </summary>
     public void HarvestCrop()
     {
-        if (currentState == GrowthState.ripe)
+        if (currentState == GrowthState.ripe && prevenetUse == false)
         {
             currentState = GrowthState.ploughed;
             SetSoilSprite();
