@@ -139,8 +139,9 @@ public class PlayerController : MonoBehaviour
     void UseTool()
     {
         GrowBlock block = null;
-        block = FindFirstObjectByType<GrowBlock>();
+        //block = FindFirstObjectByType<GrowBlock>();
         //block.PloughSoil();
+        block = GridController.instance.GetBlock(toolIndicator.position.x - 0.5f, toolIndicator.position.y - 0.5f);
 
         //工具使用间隔
         toolWaitCounter = toolWaitTime;
