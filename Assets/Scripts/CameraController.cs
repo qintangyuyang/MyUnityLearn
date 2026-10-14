@@ -15,7 +15,8 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         //查找场景中任意一个PlayerController组件，并获取其transform组件（目前游戏中只有一个玩家，所以可以直接使用FindAnyObjectByType）
-        target = FindAnyObjectByType<PlayerController>().transform;
+        //target = FindAnyObjectByType<PlayerController>().transform;
+        target = PlayerController.instance.transform;
 
         clampMin.SetParent(null);
         clampMax.SetParent(null);
