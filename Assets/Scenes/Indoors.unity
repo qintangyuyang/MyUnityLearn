@@ -2559,6 +2559,10 @@ PrefabInstance:
       propertyPath: sceneToLoad
       value: Main
       objectReference: {fileID: 0}
+    - target: {fileID: 1968686150417585083, guid: ae2a6e84cc3687d4592cd1d709146681, type: 3}
+      propertyPath: transitionName
+      value: Main-Indoors
+      objectReference: {fileID: 0}
     - target: {fileID: 2333165041205401902, guid: ae2a6e84cc3687d4592cd1d709146681, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.95

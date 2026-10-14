@@ -44,6 +44,8 @@ public class GrowBlock : MonoBehaviour
 
     public bool prevenetUse;
 
+    private Vector2Int gridPosition;
+
     void Start()
     {
 
@@ -97,6 +99,7 @@ public class GrowBlock : MonoBehaviour
                 thSR.sprite = soilTilled;
             }
         }
+        UpdateGridInfo();
     }
 
     /// <summary>
@@ -138,7 +141,7 @@ public class GrowBlock : MonoBehaviour
     /// <summary>
     /// 更新作物的精灵图片
     /// </summary>
-    void UpdateCropSprite()
+    public void UpdateCropSprite()
     {
         switch (currentState)
         {
@@ -155,6 +158,7 @@ public class GrowBlock : MonoBehaviour
                 cropSR.sprite = cropRipe;
                 break;
         }
+        UpdateGridInfo();
     }
 
     /// <summary>
@@ -186,5 +190,15 @@ public class GrowBlock : MonoBehaviour
             SetSoilSprite();
             cropSR.sprite = null;
         }
+    }
+
+    public void SetGridPosition(int x, int y)
+    {
+        gridPosition = new Vector2Int(x, y);
+    }
+
+    void UpdateGridInfo()
+    {
+        GridInfo.instance.UpdateInfo(this, gridPosition.x, gridPosition.y);
     }
 }

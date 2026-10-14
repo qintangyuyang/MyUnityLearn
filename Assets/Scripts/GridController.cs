@@ -54,6 +54,8 @@ public class GridController : MonoBehaviour
                 newBlock.transform.SetParent(transform);
                 newBlock.thSR.sprite = null;
 
+                newBlock.SetGridPosition(x, y);
+
                 blockRows[y].blocks.Add(newBlock);
 
                 if (Physics2D.OverlapBox(newBlock.transform.position, new Vector2(0.9f, 0.9f), 0f, gridBlockers))
@@ -61,7 +63,22 @@ public class GridController : MonoBehaviour
                     newBlock.thSR.sprite = null;
                     newBlock.prevenetUse = true;
                 }
+
+                if(GridInfo.instance.hasGrid)
+                {
+                    BlockInfo storedBlock = GridInfo.instance.theGrid[y].blocks[x];
+                    newBlock.currentState = storedBlock.currentStage;
+                    newBlock.isWatered = storedBlock.isWatered;
+
+                    newBlock.SetSoilSprite();
+                    newBlock.UpdateCropSprite();
+                }
             }
+        }
+
+        if (GridInfo.instance.hasGrid == false)
+        {
+            GridInfo.instance.CreateGrid();
         }
 
         baseGrowBlock.gameObject.SetActive(false);
