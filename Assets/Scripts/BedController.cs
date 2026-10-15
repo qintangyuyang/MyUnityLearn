@@ -1,0 +1,37 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class BedController : MonoBehaviour
+{
+    private bool canSleep;
+
+
+
+    void Update()
+    {
+        if (canSleep)
+        {
+            if (Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.eKey.wasPressedThisFrame)
+            {
+                GridInfo.instance.GrowCrop();
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            canSleep = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            canSleep = false;
+        }
+    }
+
+}

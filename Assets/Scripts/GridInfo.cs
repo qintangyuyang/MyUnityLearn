@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GridInfo : MonoBehaviour
 {
@@ -39,6 +40,37 @@ public class GridInfo : MonoBehaviour
         theGrid[yPos].blocks[xPos].currentStage = theBlock.currentState;
         theGrid[yPos].blocks[xPos].isWatered = theBlock.isWatered;
     }
+
+    /// <summary>
+    /// 推进作物生长阶段
+    /// </summary>
+    public void GrowCrop()
+    {
+        for (int y = 0; y < theGrid.Count; y++)
+        {
+            for (int x = 0; x < theGrid[y].blocks.Count; x++)
+            {
+                if (theGrid[y].blocks[x].isWatered == true)
+                {
+                    switch (theGrid[y].blocks[x].currentStage)
+                    {
+                        case GrowBlock.GrowthState.planted:
+                            theGrid[y].blocks[x].currentStage = GrowBlock.GrowthState.growing1;
+                            break;
+                        case GrowBlock.GrowthState.growing1:
+                            theGrid[y].blocks[x].currentStage = GrowBlock.GrowthState.growing2;
+                            break;
+                        case GrowBlock.GrowthState.growing2:
+                            theGrid[y].blocks[x].currentStage = GrowBlock.GrowthState.ripe;
+                            break;
+                    }
+                    theGrid[y].blocks[x].isWatered = false;
+                }
+            }
+        }
+    }
+
+    
 
 }
 [System.Serializable]
