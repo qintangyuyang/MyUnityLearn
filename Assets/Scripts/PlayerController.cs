@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     public Transform toolIndicator;
     public float toolRange = 3f;
 
+    public CropController.CropType seedCropType;
+
     void Start()
     {
         UIController.instance.SwitchTool((int)currentTool);
@@ -183,7 +185,12 @@ public class PlayerController : MonoBehaviour
                     anim.SetTrigger("useWateringCan");
                     break;
                 case ToolType.seeds:
-                    block.PlantCrop();
+                    if (CropController.instance.GetCropInfo(seedCropType).seedAmount > 0)
+                    {
+                        block.PlantCrop(seedCropType);
+                        CropController.instance.UseSeed(seedCropType);
+                    }
+
                     break;
                 case ToolType.basket:
                     block.HarvestCrop();

@@ -46,6 +46,10 @@ public class GrowBlock : MonoBehaviour
 
     private Vector2Int gridPosition;
 
+    public CropController.CropType cropType;
+
+    public float gorwFailChance;
+
     void Start()
     {
 
@@ -129,11 +133,15 @@ public class GrowBlock : MonoBehaviour
     /// <summary>
     /// 播种
     /// </summary>
-    public void PlantCrop()
+    public void PlantCrop(CropController.CropType cropToPlant)
     {
         if (currentState == GrowthState.ploughed && isWatered == true && prevenetUse == false)
         {
             currentState = GrowthState.planted;
+            cropType = cropToPlant;
+
+            gorwFailChance = CropController.instance.GetCropInfo(cropType).growthFailChance;
+            
             UpdateCropSprite();
         }
     }
@@ -143,19 +151,25 @@ public class GrowBlock : MonoBehaviour
     /// </summary>
     public void UpdateCropSprite()
     {
+        CropInfo activeCrop = CropController.instance.GetCropInfo(cropType);
+
         switch (currentState)
         {
             case GrowthState.planted:
-                cropSR.sprite = cropPlanted;
+                //cropSR.sprite = cropPlanted;
+                cropSR.sprite = activeCrop.planted;
                 break;
             case GrowthState.growing1:
-                cropSR.sprite = cropGrowing1;
+                //cropSR.sprite = cropGrowing1;
+                cropSR.sprite = activeCrop.growStage1;
                 break;
             case GrowthState.growing2:
-                cropSR.sprite = cropGrowing2;
+                //cropSR.sprite = cropGrowing2;
+                cropSR.sprite = activeCrop.growStage2;
                 break;
             case GrowthState.ripe:
-                cropSR.sprite = cropRipe;
+                //cropSR.sprite = cropRipe;
+                cropSR.sprite = activeCrop.ripe;
                 break;
         }
         UpdateGridInfo();
@@ -189,6 +203,8 @@ public class GrowBlock : MonoBehaviour
             currentState = GrowthState.ploughed;
             SetSoilSprite();
             cropSR.sprite = null;
+
+            CropController.instance.AddCrop(cropType);
         }
     }
 

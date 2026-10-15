@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class UIController : MonoBehaviour
 
     public GameObject[] toolbarActivatorIcons;
     public TMP_Text timeText;
+    public InventoryController theIC;
     void Start()
     {
 
@@ -27,7 +29,10 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Keyboard.current.iKey.wasPressedThisFrame)
+        {
+            theIC.OpenClose();
+        }
     }
 
     /// <summary>
