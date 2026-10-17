@@ -141,6 +141,8 @@ public class GrowBlock : MonoBehaviour
             cropType = cropToPlant;
 
             gorwFailChance = CropController.instance.GetCropInfo(cropType).growthFailChance;
+
+            CropController.instance.UseSeed(cropToPlant);
             
             UpdateCropSprite();
         }

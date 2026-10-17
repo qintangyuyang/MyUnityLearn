@@ -2,17 +2,36 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
+    public SeedDisplay[] seeds;
+    public CropDisplay[] crops;
     public void OpenClose()
     {
-        if (gameObject.activeSelf == false)
+        if (UIController.instance.theShop.gameObject.activeSelf == false)
         {
-            gameObject.SetActive(true);
+            if (gameObject.activeSelf == false)
+            {
+                gameObject.SetActive(true);
+
+                UpdateDisplay();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
-        else
+
+    }
+
+    public void UpdateDisplay()
+    {
+        foreach (var seed in seeds)
         {
-            gameObject.SetActive(false);
+            seed.UpdateDisplay();
+        }
+        foreach (var crop in crops)
+        {
+            crop.UpdateDisplay();
         }
     }
 
-    
 }

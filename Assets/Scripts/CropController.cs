@@ -65,11 +65,22 @@ public class CropController : MonoBehaviour
     }
     public void AddCrop(CropType cropToAdd)
     {
-        foreach(var info in cropList)
+        foreach (var info in cropList)
         {
             if (info.cropType == cropToAdd)
             {
                 info.cropAmount++;
+            }
+        }
+    }
+    
+    public void AddSeed(CropType seedToAdd,int amount)
+    {
+        foreach(var info in cropList)
+        {
+            if (info.cropType == seedToAdd)
+            {
+                info.seedAmount += amount;
             }
         }
     }
@@ -83,6 +94,8 @@ public class CropInfo
 
     public int seedAmount, cropAmount;
 
-    [Range(0f,100f)]
+    [Range(0f, 100f)]
     public float growthFailChance;
+
+    public float seedPrice, cropPrice;
 }
