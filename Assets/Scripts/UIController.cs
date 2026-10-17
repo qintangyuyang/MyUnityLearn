@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
@@ -25,6 +26,8 @@ public class UIController : MonoBehaviour
     public ShopController theShop;
     public Image seedImage;
     public TMP_Text moneyText;
+    public GameObject pauseScreen;
+    public string mainMenuScene;
     void Start()
     {
 
@@ -43,6 +46,11 @@ public class UIController : MonoBehaviour
             theShop.OpenClose();
         }
 #endif
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            PauseUnpause();
+        }
     }
 
     /// <summary>
@@ -86,9 +94,41 @@ public class UIController : MonoBehaviour
     {
         seedImage.sprite = CropController.instance.GetCropInfo(crop).seedType;
     }
-    
+
     public void UpdateMoneyText(float currentMoney)
     {
         moneyText.text = "$" + currentMoney;
+    }
+
+    public void PauseUnpause()
+    {
+        if (pauseScreen.activeSelf == false)
+        {
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            pauseScreen.SetActive(false);
+            Time.timeScale = 1;
+        }
+    }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(mainMenuScene);
+
+        Destroy(gameObject);
+        Destroy(PlayerController.instance.gameObject);
+        Destroy(GridInfo.instance.gameObject);
+        Destroy(TimeController.instance.gameObject);
+        Destroy(CropController.instance.gameObject);
+        Destroy(CurrencyController.instance.gameObject);
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
