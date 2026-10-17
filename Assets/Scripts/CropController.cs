@@ -73,14 +73,25 @@ public class CropController : MonoBehaviour
             }
         }
     }
-    
-    public void AddSeed(CropType seedToAdd,int amount)
+
+    public void AddSeed(CropType seedToAdd, int amount)
     {
-        foreach(var info in cropList)
+        foreach (var info in cropList)
         {
             if (info.cropType == seedToAdd)
             {
                 info.seedAmount += amount;
+            }
+        }
+    }
+    
+    public void RemoveCrop(CropType cropToRemove)
+    {
+        foreach (var info in cropList)
+        {
+            if (info.cropType == cropToRemove)
+            {
+                info.cropAmount = 0;
             }
         }
     }
