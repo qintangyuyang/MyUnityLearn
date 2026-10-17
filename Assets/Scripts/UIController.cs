@@ -24,6 +24,7 @@ public class UIController : MonoBehaviour
     public InventoryController theIC;
     public ShopController theShop;
     public Image seedImage;
+    public TMP_Text moneyText;
     void Start()
     {
 
@@ -79,9 +80,14 @@ public class UIController : MonoBehaviour
             timeText.text = Mathf.FloorToInt(currentTime - 24) + "AM";
         }
     }
-    
+
     public void SwitchSeed(CropController.CropType crop)
     {
         seedImage.sprite = CropController.instance.GetCropInfo(crop).seedType;
+    }
+    
+    public void UpdateMoneyText(float currentMoney)
+    {
+        moneyText.text = "$" + currentMoney;
     }
 }

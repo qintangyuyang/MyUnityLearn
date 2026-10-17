@@ -18,13 +18,22 @@ public class CurrencyController : MonoBehaviour
 
     public float currentMoney;
 
+    void Start()
+    {
+        UIController.instance.UpdateMoneyText(currentMoney);
+    }
+
     public void SpendMoney(float amountToSpend)
     {
         currentMoney -= amountToSpend;
+
+        UIController.instance.UpdateMoneyText(currentMoney);
     }
     public void AddMoney(float amountToAdd)
     {
         currentMoney += amountToAdd;
+
+        UIController.instance.UpdateMoneyText(currentMoney);
     }
     public bool CheckMoney(float amount)
     {
