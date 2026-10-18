@@ -93,6 +93,8 @@ public class UIController : MonoBehaviour
     public void SwitchSeed(CropController.CropType crop)
     {
         seedImage.sprite = CropController.instance.GetCropInfo(crop).seedType;
+
+        AudioManager.instance.PlaySFXPitchAdjusted(5);
     }
 
     public void UpdateMoneyText(float currentMoney)
@@ -112,6 +114,8 @@ public class UIController : MonoBehaviour
             pauseScreen.SetActive(false);
             Time.timeScale = 1;
         }
+
+        AudioManager.instance.PlaySFXPitchAdjusted(5);
     }
 
     public void MainMenu()
@@ -125,10 +129,13 @@ public class UIController : MonoBehaviour
         Destroy(TimeController.instance.gameObject);
         Destroy(CropController.instance.gameObject);
         Destroy(CurrencyController.instance.gameObject);
+
+        AudioManager.instance.PlaySFXPitchAdjusted(5);
     }
     
     public void QuitGame()
     {
         Application.Quit();
+        AudioManager.instance.PlaySFXPitchAdjusted(5);
     }
 }

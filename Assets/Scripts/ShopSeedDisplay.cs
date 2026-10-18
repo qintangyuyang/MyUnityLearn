@@ -26,6 +26,8 @@ public class ShopSeedDisplay : MonoBehaviour
             CropController.instance.AddSeed(crop, amount);
             CurrencyController.instance.SpendMoney(info.seedPrice * amount);
             UpdateDisplay();
+
+            AudioManager.instance.PlaySFXPitchAdjusted(5);
         }
     }
 }
